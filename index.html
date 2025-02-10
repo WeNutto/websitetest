@@ -290,9 +290,15 @@
 
         function toggleMusic() {
             if (backgroundMusic.paused) {
-                backgroundMusic.play();
-                musicIcon.classList.remove("fa-volume-mute");
-                musicIcon.classList.add("fa-volume-up");
+                backgroundMusic.play()
+                    .then(() => {
+                        musicIcon.classList.remove("fa-volume-mute");
+                        musicIcon.classList.add("fa-volume-up");
+                    })
+                    .catch((error) => {
+                        console.error("ไม่สามารถเล่นเสียงได้:", error);
+                        alert("กรุณาคลิกปุ่มเพื่ออนุญาตให้เล่นเสียง");
+                    });
             } else {
                 backgroundMusic.pause();
                 musicIcon.classList.remove("fa-volume-up");
@@ -300,8 +306,8 @@
             }
         }
 
-        // เริ่มเล่นเพลงพื้นหลังเมื่อหน้าเว็บโหลด
-        backgroundMusic.play();
+        // เริ่มเล่นเพลงพื้นหลังเมื่อผู้ใช้คลิกปุ่ม
+        document.getElementById("musicControl").addEventListener("click", toggleMusic);
 
         // ฟังก์ชันสำหรับโหลดและแสดงข้อความที่ทิ้งไว้
         function loadMessages() {
@@ -377,5 +383,7 @@
             document.getElementById("messageForm").style.display = "none"; // ซ่อนฟอร์มทิ้งข้อความ
         }
     </script>
+    <!-- เพิ่ม Font Awesome สำหรับไอคอน -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </body>
 </html>
