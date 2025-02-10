@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สำหรับคุณลิน</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+  
+        .scrolling-text {
+            position: absolute;
+            bottom: 10px;
+            left: 10%;
+            white-space: nowrap;
+            font-size: 1.5rem;
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 1), 0 0 20px rgba(255, 105, 180, 1), 0 0 30px rgba(255, 105, 180, 1);
+            animation: scroll-left 15s linear infinite, fadeOut 30s linear infinite;
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+     
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1.5s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+      
+        #question {
+            text-shadow: 0 0 10px rgba(255, 105, 180, 1), 0 0 20px rgba(255, 105, 180, 1), 0 0 30px rgba(255, 105, 180, 1);
+        }
+
+        .image-animation {
+            animation: float 3s ease-in-out infinite;
+            width: 80vw; /* ขนาดรูปภาพ 80% ของความกว้างหน้าจอ */
+            max-width: 300px; /* ขนาดสูงสุดไม่เกิน 300px */
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+    
+        .btn {
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+    
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #ff6f61;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+    
+        .cool-down {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+   
+        .no-btn-gone {
+            content: "🤪";
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+   
+    <div class="scrolling-text">
+        คุณชอบผมมั้ย? 💕 | ผมหล่อสุดในโลกใช่มั้ย? 😆 | เราจะแบ่งของอร่อยกันมั้ย? 🍕 | คุณเนิร์ดกว่าผมใช่หรือไม่? 🤓 | คุณจะอยู่กับผมตลอดไปมั้ย? 💍 Create by Nut
+    </div>
+
+ 
+    <div id="mainContent" class="text-center z-10">
+        <h1 id="question" class="text-3xl font-bold mb-4 text-white fade-in">คุณชอบผมมั้ย? 💕</h1>
+        <img id="image" src="kikilala001.jpg" alt="Cute Image" class="image-animation mx-auto rounded-lg shadow-lg">
+        <div class="mt-6 flex gap-6 justify-center">
+            <button id="yesBtn" class="btn bg-pink-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-pink-700" onclick="nextQuestion(true)">Yes 💖</button>
+            <button id="noBtn" class="btn bg-gray-400 text-black px-6 py-3 rounded-lg shadow-md hover:bg-gray-500" onmouseover="changeToEmojis()">No 😢</button>
+        </div>
+        <div class="loading-spinner" id="loadingSpinner"></div>
+    </div>
+
+ 
+    <div id="finalScreen" class="text-center hidden z-10">
+        <h1 class="text-4xl font-extrabold text-white">🎉 เย่ นี้ของรางวัล! 🎉</h1>
+        <p class="text-lg mt-2 text-white">คุณเล่นเว็บนี้จบแล้ว! หวังว่าจะชอบนะ 😊</p>
+        <img src="your-drawing.jpg" alt="Your Drawing" class="w-64 mx-auto rounded-lg mt-4 shadow-lg image-animation">
+        <button class="mt-6 px-6 py-3 bg-yellow-400 text-black rounded-lg text-lg shadow-md hover:bg-yellow-500" onclick="restartGame()">Play Again 🔄</button>
+    </div>
+
+    <script>
+        let questions = [
+            "คุณชอบผมมั้ย? 💕",
+            "ผมหล่อสุดในโลกใช่มั้ย? 😆",
+            "เราจะแบ่งของอร่อยกันมั้ย? 🍕",
+            "คุณเนิร์ดกว่าผมใช่หรือไม่? 🤓",
+            "คุณจะอยู่กับผมตลอดไปมั้ย?อิอิ 💍"
+        ];
+        let images = [
+            "kikilala001.jpg",
+            "kikilala002.jpg",
+            "kikilala003.jpg",
+            "kikilala004.jpg",
+            "kikilala005.jpg"
+        ];
+        let index = 0;
+
+        function nextQuestion(answer) {
+            if (answer) {
+                // แสดง Loading Spinner
+                document.getElementById("loadingSpinner").style.display = "block";
+                document.getElementById("yesBtn").classList.add("cool-down");
+
+                setTimeout(() => {
+                    // ซ่อน Loading Spinner
+                    document.getElementById("loadingSpinner").style.display = "none";
+                    document.getElementById("yesBtn").classList.remove("cool-down");
+
+                    index++;
+                    if (index < questions.length) {
+                        document.getElementById("question").textContent = questions[index];
+                        document.getElementById("image").src = images[index];
+                    } else {
+                        document.getElementById("mainContent").classList.add("hidden");
+                        document.getElementById("finalScreen").classList.remove("hidden");
+                    }
+                }, 1000); // การโหลด 1 วินาที
+            }
+        }
+
+        function changeToEmojis() {
+            let noBtn = document.getElementById("noBtn");
+            noBtn.textContent = "🤪";
+        }
+
+        function restartGame() {
+            index = 0;
+            document.getElementById("finalScreen").classList.add("hidden");
+            document.getElementById("mainContent").classList.remove("hidden");
+            document.getElementById("question").textContent = questions[index];
+            document.getElementById("image").src = images[index];
+            document.getElementById("noBtn").textContent = "No 😢"; // รีเซ็ตปุ่ม "No" เป็นข้อความเดิม
+        }
+    </script>
+</body>
+</html>
