@@ -6,20 +6,32 @@
     <title>สำหรับคุณลิน</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* ป้องกันการเลื่อนหน้าเว็บ */
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+        }
 
         body {
-            margin: 0;
             font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            overflow: hidden;
             position: relative;
         }
 
-  
+        /* ปรับขนาดและจัดวางเนื้อหา */
+        #mainContent, #finalScreen {
+            width: 100%;
+            max-width: 500px; /* จำกัดความกว้างสูงสุด */
+            padding: 20px;
+            text-align: center;
+        }
+
         .scrolling-text {
             position: absolute;
             bottom: 10px;
@@ -42,26 +54,11 @@
             100% { opacity: 0; }
         }
 
-     
-        .fade-in {
-            opacity: 0;
-            animation: fadeIn 1.5s ease-in forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-      
-        #question {
-            text-shadow: 0 0 10px rgba(255, 105, 180, 1), 0 0 20px rgba(255, 105, 180, 1), 0 0 30px rgba(255, 105, 180, 1);
-        }
-
+        /* ปรับขนาดรูปภาพ */
         .image-animation {
             animation: float 3s ease-in-out infinite;
-            width: 80vw; /* ขนาดรูปภาพ 80% ของความกว้างหน้าจอ */
-            max-width: 300px; /* ขนาดสูงสุดไม่เกิน 300px */
+            width: 80vw; /* ปรับตามขนาดหน้าจอ */
+            max-width: 300px; /* จำกัดขนาดสูงสุด */
         }
 
         @keyframes float {
@@ -70,17 +67,33 @@
             100% { transform: translateY(0); }
         }
 
-    
+        /* ปรับขนาดข้อความ */
+        #question {
+            font-size: 2rem; /* ปรับขนาดข้อความ */
+            text-shadow: 0 0 10px rgba(255, 105, 180, 1), 0 0 20px rgba(255, 105, 180, 1), 0 0 30px rgba(255, 105, 180, 1);
+        }
+
+        /* ปรับขนาดปุ่ม */
         .btn {
-            transition: all 0.3s ease;
+            font-size: 1.2rem; /* ปรับขนาดปุ่ม */
+            padding: 10px 20px; /* ปรับ padding */
         }
 
-        .btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        /* ปรับขนาดหน้าจอเล็ก (มือถือ) */
+        @media (max-width: 600px) {
+            #question {
+                font-size: 1.5rem; /* ปรับขนาดข้อความสำหรับมือถือ */
+            }
+            .btn {
+                font-size: 1rem; /* ปรับขนาดปุ่มสำหรับมือถือ */
+                padding: 8px 16px;
+            }
+            .image-animation {
+                width: 90vw; /* ปรับขนาดรูปภาพสำหรับมือถือ */
+            }
         }
 
-    
+        /* Loading Spinner */
         .loading-spinner {
             border: 4px solid rgba(255, 255, 255, 0.3);
             border-top: 4px solid #ff6f61;
@@ -88,7 +101,7 @@
             width: 40px;
             height: 40px;
             animation: spin 1s linear infinite;
-            margin: auto;
+            margin: 20px auto;
             display: none;
         }
 
@@ -97,27 +110,20 @@
             100% { transform: rotate(360deg); }
         }
 
-    
+        /* Cool Down Effect */
         .cool-down {
             pointer-events: none;
             opacity: 0.5;
         }
-
-   
-        .no-btn-gone {
-            content: "🤪";
-            font-size: 24px;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
-   
+    <!-- Scrolling Text -->
     <div class="scrolling-text">
         คุณชอบผมมั้ย? 💕 | ผมหล่อสุดในโลกใช่มั้ย? 😆 | เราจะแบ่งของอร่อยกันมั้ย? 🍕 | คุณเนิร์ดกว่าผมใช่หรือไม่? 🤓 | คุณจะอยู่กับผมตลอดไปมั้ย? 💍 Create by Nut
     </div>
 
- 
+    <!-- Main Content -->
     <div id="mainContent" class="text-center z-10">
         <h1 id="question" class="text-3xl font-bold mb-4 text-white fade-in">คุณชอบผมมั้ย? 💕</h1>
         <img id="image" src="kikilala001.jpg" alt="Cute Image" class="image-animation mx-auto rounded-lg shadow-lg">
@@ -128,7 +134,7 @@
         <div class="loading-spinner" id="loadingSpinner"></div>
     </div>
 
- 
+    <!-- Final Screen -->
     <div id="finalScreen" class="text-center hidden z-10">
         <h1 class="text-4xl font-extrabold text-white">🎉 เย่ นี้ของรางวัล! 🎉</h1>
         <p class="text-lg mt-2 text-white">คุณเล่นเว็บนี้จบแล้ว! หวังว่าจะชอบนะ 😊</p>
@@ -140,7 +146,7 @@
         let questions = [
             "คุณชอบผมมั้ย? 💕",
             "ผมหล่อสุดในโลกใช่มั้ย? 😆",
-            "เราจะแบ่งของอร่อยกันมั้ย? 🍕",
+            "เราจะแบ่งของอร่อยกันมั้ย? �",
             "คุณเนิร์ดกว่าผมใช่หรือไม่? 🤓",
             "คุณจะอยู่กับผมตลอดไปมั้ย?อิอิ 💍"
         ];
@@ -152,9 +158,12 @@
             "kikilala005.jpg"
         ];
         let index = 0;
+        let isCoolingDown = false; // เพิ่มตัวแปรเพื่อตรวจสอบสถานะคูลดาวน์
 
         function nextQuestion(answer) {
+            if (isCoolingDown) return; // ถ้ากำลังคูลดาวน์อยู่ ให้หยุดการทำงาน
             if (answer) {
+                isCoolingDown = true; // เริ่มคูลดาวน์
                 // แสดง Loading Spinner
                 document.getElementById("loadingSpinner").style.display = "block";
                 document.getElementById("yesBtn").classList.add("cool-down");
@@ -172,6 +181,7 @@
                         document.getElementById("mainContent").classList.add("hidden");
                         document.getElementById("finalScreen").classList.remove("hidden");
                     }
+                    isCoolingDown = false; // จบคูลดาวน์
                 }, 1000); // การโหลด 1 วินาที
             }
         }
