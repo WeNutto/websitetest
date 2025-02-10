@@ -140,6 +140,45 @@
         .message strong {
             color: #ff6f61;
         }
+
+        /* ซ่อนฟอร์มทิ้งข้อความตอนเริ่มต้น */
+        #messageForm {
+            display: none;
+            margin-top: 20px;
+        }
+
+        /* ปรับสไตล์ฟอร์ม */
+        #messageForm input,
+        #messageForm textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        #messageForm textarea {
+            resize: vertical; /* อนุญาตให้ปรับความสูงของ textarea ได้ */
+            min-height: 100px;
+        }
+
+        #messageForm button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            background: #3b82f6;
+            color: white;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        #messageForm button:hover {
+            background: #2563eb;
+        }
     </style>
 </head>
 <body>
@@ -157,6 +196,14 @@
             <button id="noBtn" class="btn bg-gray-400 text-black px-6 py-3 rounded-lg shadow-md hover:bg-gray-500" onmouseover="changeToEmojis()">No 😢</button>
         </div>
         <div class="loading-spinner" id="loadingSpinner"></div>
+    </div>
+
+    <!-- Final Screen -->
+    <div id="finalScreen" class="text-center hidden z-10">
+        <h1 class="text-4xl font-extrabold text-white">🎉 เย่ นี้ของรางวัล! 🎉</h1>
+        <p class="text-lg mt-2 text-white">คุณเล่นเว็บนี้จบแล้ว! หวังว่าจะชอบนะ 😊</p>
+        <img src="your-drawing.jpg" alt="Your Drawing" class="w-64 mx-auto rounded-lg mt-4 shadow-lg image-animation">
+        <button class="mt-6 px-6 py-3 bg-yellow-400 text-black rounded-lg text-lg shadow-md hover:bg-yellow-500" onclick="restartGame()">Play Again 🔄</button>
 
         <!-- ฟอร์มทิ้งข้อความ -->
         <div class="mt-8">
@@ -170,14 +217,6 @@
 
         <!-- แสดงข้อความที่ทิ้งไว้ -->
         <div id="messages" class="mt-6"></div>
-    </div>
-
-    <!-- Final Screen -->
-    <div id="finalScreen" class="text-center hidden z-10">
-        <h1 class="text-4xl font-extrabold text-white">🎉 เย่ นี้ของรางวัล! 🎉</h1>
-        <p class="text-lg mt-2 text-white">คุณเล่นเว็บนี้จบแล้ว! หวังว่าจะชอบนะ 😊</p>
-        <img src="your-drawing.jpg" alt="Your Drawing" class="w-64 mx-auto rounded-lg mt-4 shadow-lg image-animation">
-        <button class="mt-6 px-6 py-3 bg-yellow-400 text-black rounded-lg text-lg shadow-md hover:bg-yellow-500" onclick="restartGame()">Play Again 🔄</button>
     </div>
 
     <script>
@@ -249,6 +288,7 @@
                     } else {
                         document.getElementById("mainContent").classList.add("hidden");
                         document.getElementById("finalScreen").classList.remove("hidden");
+                        document.getElementById("messageForm").style.display = "block"; // แสดงฟอร์มทิ้งข้อความ
                     }
                     isCoolingDown = false; // จบคูลดาวน์
                 }, 1000); // การโหลด 1 วินาที
@@ -267,6 +307,7 @@
             document.getElementById("question").textContent = questions[index];
             document.getElementById("image").src = images[index];
             document.getElementById("noBtn").textContent = "No 😢"; // รีเซ็ตปุ่ม "No" เป็นข้อความเดิม
+            document.getElementById("messageForm").style.display = "none"; // ซ่อนฟอร์มทิ้งข้อความ
         }
     </script>
 </body>
