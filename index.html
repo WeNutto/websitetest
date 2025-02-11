@@ -283,31 +283,31 @@
             completionSound.currentTime = 0; // รีเซ็ตเสียงเพื่อเล่นซ้ำได้
             completionSound.play();
         }
+    
+    // ควบคุมเสียงเพลงพื้นหลัง
+    const backgroundMusic = document.getElementById("backgroundMusic");
+    const musicIcon = document.getElementById("musicIcon");
 
-        // ควบคุมเสียงเพลงพื้นหลัง
-        const backgroundMusic = document.getElementById("backgroundMusic");
-        const musicIcon = document.getElementById("musicIcon");
-
-        function toggleMusic() {
-            if (backgroundMusic.paused) {
-                backgroundMusic.play()
-                    .then(() => {
-                        musicIcon.classList.remove("fa-volume-mute");
-                        musicIcon.classList.add("fa-volume-up");
-                    })
-                    .catch((error) => {
-                        console.error("ไม่สามารถเล่นเสียงได้:", error);
-                        alert("กรุณาคลิกปุ่มเพื่ออนุญาตให้เล่นเสียง");
-                    });
-            } else {
-                backgroundMusic.pause();
-                musicIcon.classList.remove("fa-volume-up");
-                musicIcon.classList.add("fa-volume-mute");
-            }
+    function toggleMusic() {
+        if (backgroundMusic.paused) {
+            backgroundMusic.play()
+                .then(() => {
+                    musicIcon.classList.remove("fa-volume-mute");
+                    musicIcon.classList.add("fa-volume-up");
+                })
+                .catch((error) => {
+                    console.error("ไม่สามารถเล่นเสียงได้:", error);
+                    alert("กรุณาคลิกปุ่มเพื่ออนุญาตให้เล่นเสียง");
+                });
+        } else {
+            backgroundMusic.pause();
+            musicIcon.classList.remove("fa-volume-up");
+            musicIcon.classList.add("fa-volume-mute");
         }
+    }
 
-        // เริ่มเล่นเพลงพื้นหลังเมื่อผู้ใช้คลิกปุ่ม
-        document.getElementById("musicControl").addEventListener("click", toggleMusic);
+    // เริ่มเล่นเพลงพื้นหลังเมื่อผู้ใช้คลิกปุ่ม
+    document.getElementById("musicControl").addEventListener("click", toggleMusic);
 
         // ฟังก์ชันสำหรับโหลดและแสดงข้อความที่ทิ้งไว้
         function loadMessages() {
@@ -383,5 +383,6 @@
             document.getElementById("messageForm").style.display = "none"; // ซ่อนฟอร์มทิ้งข้อความ
         }
     </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </body>
 </html>
