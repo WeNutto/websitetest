@@ -217,7 +217,7 @@
 
     <!-- Scrolling Text -->
     <div class="scrolling-text">
-        คุณชอบผมมั้ย? 💕 | ผมหล่อสุดในโลกใช่มั้ย? 😆 | เราจะแบ่งของอร่อยกันมั้ย? � | คุณเนิร์ดกว่าผมใช่หรือไม่? 🤓 | คุณจะอยู่กับผมตลอดไปมั้ย? 💍 Create by Nut
+        Happy Valentine Day!! 💕 | Hope u feel great! 😆 |  Omg i did this wow | เนิร์ด 🤓 | haha 💍 Create by Nut
     </div>
 
     <!-- Main Content -->
@@ -256,27 +256,27 @@
         let questions = [
             "คุณชอบผมมั้ย? 💕",
             "ผมหล่อสุดในโลกใช่มั้ย? 😆",
-            "เราจะแบ่งของอร่อยกันมั้ย? �",
+            "เราจะแบ่งของอร่อยกันมั้ย? 🍰",
             "คุณเนิร์ดกว่าผมใช่หรือไม่? 🤓",
             "คุณจะอยู่กับผมตลอดไปมั้ย?อิอิ 💍"
         ];
         let images = [
             "kikilala001.jpg",
             "kikilala002.jpg",
-            "kikilala003.jpg",
-            "kikilala004.jpg",
-            "kikilala005.jpg"
+            "food001.gif", // Example GIF file
+            "nerd001.gif",
+            "belong001.gif"  // Another example GIF file
         ];
         let index = 0;
         let isCoolingDown = false; // เพิ่มตัวแปรเพื่อตรวจสอบสถานะคูลดาวน์
-
+    
         // เล่นเสียงปุ่มกด
         function playButtonSound() {
             const buttonSound = document.getElementById("buttonSound");
             buttonSound.currentTime = 0; // รีเซ็ตเสียงเพื่อเล่นซ้ำได้
             buttonSound.play();
         }
-
+    
         // เล่นเสียงตอนเล่นเสร็จ
         function playCompletionSound() {
             const completionSound = document.getElementById("completionSound");
@@ -284,31 +284,31 @@
             completionSound.play();
         }
     
-    // ควบคุมเสียงเพลงพื้นหลัง
-    const backgroundMusic = document.getElementById("backgroundMusic");
-    const musicIcon = document.getElementById("musicIcon");
-
-    function toggleMusic() {
-        if (backgroundMusic.paused) {
-            backgroundMusic.play()
-                .then(() => {
-                    musicIcon.classList.remove("fa-volume-mute");
-                    musicIcon.classList.add("fa-volume-up");
-                })
-                .catch((error) => {
-                    console.error("ไม่สามารถเล่นเสียงได้:", error);
-                    alert("กรุณาคลิกปุ่มเพื่ออนุญาตให้เล่นเสียง");
-                });
-        } else {
-            backgroundMusic.pause();
-            musicIcon.classList.remove("fa-volume-up");
-            musicIcon.classList.add("fa-volume-mute");
+        // ควบคุมเสียงเพลงพื้นหลัง
+        const backgroundMusic = document.getElementById("backgroundMusic");
+        const musicIcon = document.getElementById("musicIcon");
+    
+        function toggleMusic() {
+            if (backgroundMusic.paused) {
+                backgroundMusic.play()
+                    .then(() => {
+                        musicIcon.classList.remove("fa-volume-mute");
+                        musicIcon.classList.add("fa-volume-up");
+                    })
+                    .catch((error) => {
+                        console.error("ไม่สามารถเล่นเสียงได้:", error);
+                        alert("กรุณาคลิกปุ่มเพื่ออนุญาตให้เล่นเสียง");
+                    });
+            } else {
+                backgroundMusic.pause();
+                musicIcon.classList.remove("fa-volume-up");
+                musicIcon.classList.add("fa-volume-mute");
+            }
         }
-    }
-
-    // เริ่มเล่นเพลงพื้นหลังเมื่อผู้ใช้คลิกปุ่ม
-    document.getElementById("musicControl").addEventListener("click", toggleMusic);
-
+    
+        // เริ่มเล่นเพลงพื้นหลังเมื่อผู้ใช้คลิกปุ่ม
+        document.getElementById("musicControl").addEventListener("click", toggleMusic);
+    
         // ฟังก์ชันสำหรับโหลดและแสดงข้อความที่ทิ้งไว้
         function loadMessages() {
             const messages = JSON.parse(localStorage.getItem("messages")) || [];
@@ -319,7 +319,7 @@
                 </div>
             `).join("");
         }
-
+    
         // ฟังก์ชันสำหรับบันทึกข้อความ
         function saveMessage(name, message) {
             const messages = JSON.parse(localStorage.getItem("messages")) || [];
@@ -327,7 +327,7 @@
             localStorage.setItem("messages", JSON.stringify(messages));
             loadMessages(); // โหลดข้อความใหม่
         }
-
+    
         // เมื่อฟอร์มถูกส่ง
         document.getElementById("messageForm").addEventListener("submit", function (e) {
             e.preventDefault();
@@ -336,10 +336,10 @@
             saveMessage(name, message);
             document.getElementById("messageForm").reset(); // รีเซ็ตฟอร์ม
         });
-
+    
         // โหลดข้อความเมื่อหน้าเว็บโหลด
         loadMessages();
-
+    
         function nextQuestion(answer) {
             if (isCoolingDown) return; // ถ้ากำลังคูลดาวน์อยู่ ให้หยุดการทำงาน
             if (answer) {
@@ -347,12 +347,12 @@
                 // แสดง Loading Spinner
                 document.getElementById("loadingSpinner").style.display = "block";
                 document.getElementById("yesBtn").classList.add("cool-down");
-
+    
                 setTimeout(() => {
                     // ซ่อน Loading Spinner
                     document.getElementById("loadingSpinner").style.display = "none";
                     document.getElementById("yesBtn").classList.remove("cool-down");
-
+    
                     index++;
                     if (index < questions.length) {
                         document.getElementById("question").textContent = questions[index];
@@ -367,12 +367,12 @@
                 }, 1000); // การโหลด 1 วินาที
             }
         }
-
+    
         function changeToEmojis() {
             let noBtn = document.getElementById("noBtn");
             noBtn.textContent = "🤪";
         }
-
+    
         function restartGame() {
             index = 0;
             document.getElementById("finalScreen").classList.add("hidden");
