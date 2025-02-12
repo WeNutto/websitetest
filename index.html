@@ -11,7 +11,7 @@
             src: url('iannnnn-DOG-Bold.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
-        }
+      }
 
         /* อนุญาตให้เลื่อนขึ้นลงเท่านั้น */
         html, body {
@@ -67,7 +67,7 @@
         .image-container {
             display: inline-block;
             padding: 20px;
-            background-color: #ee9e9e; 
+            background-color: #e9a6a6; /* สีชมพูเข้ม */
             border-radius: 10px;
             margin-bottom: 20px;
         }
@@ -76,7 +76,7 @@
             animation: float 3s ease-in-out infinite;
             width: 100%; /* ปรับตามขนาดหน้าจอ */
             max-width: 500px; /* จำกัดขนาดสูงสุด */
-            height: 300px; /* กำหนดความสูงให้เท่ากัน */
+            height: auto; /* ปรับความสูงอัตโนมัติ */
             object-fit: cover; /* ปรับให้รูปภาพครอบคลุมพื้นที่ */
             border-radius: 10px; /* เพิ่มความโค้งมนให้กับรูปภาพ */
         }
@@ -111,12 +111,12 @@
                 padding: 8px 16px;
             }
             .image-animation {
-                width: 90vw; /* ปรับขนาดรูปภาพสำหรับมือถือ */
-                height: 50vh; /* ปรับความสูงให้ไม่เกินครึ่งจอมือถือ */
+                width: 100%; /* ปรับขนาดรูปภาพสำหรับมือถือ */
+                height: auto; /* ปรับความสูงอัตโนมัติสำหรับมือถือ */
             }
             .image-container {
                 width: 100%; /* ให้กรอบเต็มความกว้าง */
-                max-width: 90vw; /* จำกัดความกว้างสูงสุด */
+                max-width: 100%; /* จำกัดความกว้างสูงสุด */
                 padding: 10px; /* ลด padding สำหรับมือถือ */
             }
         }
